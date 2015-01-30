@@ -8,13 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		7A9435CD1A7BD722004DEF83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9435CC1A7BD722004DEF83 /* AppDelegate.swift */; };
-		7A9435CF1A7BD722004DEF83 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7A9435CE1A7BD722004DEF83 /* GameScene.sks */; };
 		7A9435D11A7BD722004DEF83 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9435D01A7BD722004DEF83 /* GameScene.swift */; };
 		7A9435D31A7BD722004DEF83 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9435D21A7BD722004DEF83 /* GameViewController.swift */; };
 		7A9435D61A7BD722004DEF83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9435D41A7BD722004DEF83 /* Main.storyboard */; };
 		7A9435D81A7BD722004DEF83 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A9435D71A7BD722004DEF83 /* Images.xcassets */; };
 		7A9435DB1A7BD722004DEF83 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A9435D91A7BD722004DEF83 /* LaunchScreen.xib */; };
 		7A9435E71A7BD722004DEF83 /* Vector_AdderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9435E61A7BD722004DEF83 /* Vector_AdderTests.swift */; };
+		7AE5BD5C1A7BDCB6006ACC67 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AE5BD5B1A7BDCB6006ACC67 /* SpriteKit.framework */; };
+		7AE5BD5E1A7BDCBE006ACC67 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AE5BD5D1A7BDCBE006ACC67 /* iAd.framework */; };
+		7AE5BD601A7BEB1E006ACC67 /* VAArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE5BD5F1A7BEB1E006ACC67 /* VAArrow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,7 +33,6 @@
 		7A9435C71A7BD722004DEF83 /* Vector Adder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vector Adder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A9435CB1A7BD722004DEF83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A9435CC1A7BD722004DEF83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7A9435CE1A7BD722004DEF83 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		7A9435D01A7BD722004DEF83 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		7A9435D21A7BD722004DEF83 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		7A9435D51A7BD722004DEF83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -40,6 +41,9 @@
 		7A9435E01A7BD722004DEF83 /* Vector AdderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Vector AdderTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A9435E51A7BD722004DEF83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A9435E61A7BD722004DEF83 /* Vector_AdderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector_AdderTests.swift; sourceTree = "<group>"; };
+		7AE5BD5B1A7BDCB6006ACC67 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		7AE5BD5D1A7BDCBE006ACC67 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		7AE5BD5F1A7BEB1E006ACC67 /* VAArrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VAArrow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +51,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7AE5BD5E1A7BDCBE006ACC67 /* iAd.framework in Frameworks */,
+				7AE5BD5C1A7BDCB6006ACC67 /* SpriteKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +69,8 @@
 		7A9435BE1A7BD722004DEF83 = {
 			isa = PBXGroup;
 			children = (
+				7AE5BD5D1A7BDCBE006ACC67 /* iAd.framework */,
+				7AE5BD5B1A7BDCB6006ACC67 /* SpriteKit.framework */,
 				7A9435C91A7BD722004DEF83 /* Vector Adder */,
 				7A9435E31A7BD722004DEF83 /* Vector AdderTests */,
 				7A9435C81A7BD722004DEF83 /* Products */,
@@ -82,9 +90,9 @@
 			isa = PBXGroup;
 			children = (
 				7A9435CC1A7BD722004DEF83 /* AppDelegate.swift */,
-				7A9435CE1A7BD722004DEF83 /* GameScene.sks */,
 				7A9435D01A7BD722004DEF83 /* GameScene.swift */,
 				7A9435D21A7BD722004DEF83 /* GameViewController.swift */,
+				7AE5BD5F1A7BEB1E006ACC67 /* VAArrow.swift */,
 				7A9435D41A7BD722004DEF83 /* Main.storyboard */,
 				7A9435D71A7BD722004DEF83 /* Images.xcassets */,
 				7A9435D91A7BD722004DEF83 /* LaunchScreen.xib */,
@@ -167,6 +175,7 @@
 				TargetAttributes = {
 					7A9435C61A7BD722004DEF83 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 7Z7MTLZL8W;
 					};
 					7A9435DF1A7BD722004DEF83 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -200,7 +209,6 @@
 			files = (
 				7A9435DB1A7BD722004DEF83 /* LaunchScreen.xib in Resources */,
 				7A9435D81A7BD722004DEF83 /* Images.xcassets in Resources */,
-				7A9435CF1A7BD722004DEF83 /* GameScene.sks in Resources */,
 				7A9435D61A7BD722004DEF83 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -221,6 +229,7 @@
 			files = (
 				7A9435D11A7BD722004DEF83 /* GameScene.swift in Sources */,
 				7A9435D31A7BD722004DEF83 /* GameViewController.swift in Sources */,
+				7AE5BD601A7BEB1E006ACC67 /* VAArrow.swift in Sources */,
 				7A9435CD1A7BD722004DEF83 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,6 +424,7 @@
 				7A9435EC1A7BD722004DEF83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7A9435ED1A7BD722004DEF83 /* Build configuration list for PBXNativeTarget "Vector AdderTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +433,7 @@
 				7A9435EF1A7BD722004DEF83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

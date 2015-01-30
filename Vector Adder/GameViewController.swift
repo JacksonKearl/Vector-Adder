@@ -8,46 +8,51 @@
 
 import UIKit
 import SpriteKit
+import iAd
 
-extension SKNode {
-    class func unarchiveFromFile(file : NSString) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
-            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
-            
-            archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
-            archiver.finishDecoding()
-            return scene
-        } else {
-            return nil
-        }
-    }
-}
 
-class GameViewController: UIViewController {
-
+class GameViewController: UIViewController, ADBannerViewDelegate {
+    
+    var adView:ADBannerView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
-            // Configure the view.
-            let skView = self.view as SKView
+        let iADHeight:CGFloat = (UIDevice.currentDevice().userInterfaceIdiom == .Pad) ? 66 : 50
+        adView = ADBannerView(frame: CGRectMake(0, self.view.frame.height-iADHeight, self.view.frame.width, iADHeight))
+        adView?.delegate = self
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        let skView = self.view as SKView
+        
+        if skView.scene == nil{
             skView.showsFPS = true
             skView.showsNodeCount = true
             
-            /* Sprite Kit applies additional optimizations to improve rendering performance */
-            skView.ignoresSiblingOrder = true
+            let mainMenu = GameScene(size: skView.bounds.size)
+            mainMenu.scaleMode = .AspectFill
             
-            /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
+            skView.presentScene(mainMenu)
             
-            skView.presentScene(scene)
         }
+        
+
     }
+    
+    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        banner.removeFromSuperview()
+    }
+    
+    func bannerViewDidLoadAd(banner: ADBannerView!) {
+        self.view.addSubview(adView!)
+    }
+    
+    
 
     override func shouldAutorotate() -> Bool {
-        return true
+        return false
     }
 
     override func supportedInterfaceOrientations() -> Int {

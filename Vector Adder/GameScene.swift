@@ -10,36 +10,22 @@ import SpriteKit
 
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
+        let squareFrame = CGRectMake(-self.frame.width/2.0, -self.frame.width/2.0, self.frame.width, self.frame.width)
+        let mainNode = SKShapeNode(rect: squareFrame)
+        mainNode.fillColor = .blueColor()
+        mainNode.strokeColor = .clearColor()
+        mainNode.position = CGPointMake(self.frame.width/2 , self.frame.height-self.frame.width/2)
+        self.addChild(mainNode)
         
-        self.addChild(myLabel)
+        let initialArrow = VAArrow()
+        initialArrow.anchorPoint = CGPointMake(4/33.0, 12/24.0)
+
+        mainNode.addChild(initialArrow)
+        
+        
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        /* Called when a touch begins */
-        
-        for touch: AnyObject in touches {
-            let location = touch.locationInNode(self)
-            
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
-        }
-    }
-   
-    override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
+
     }
 }
