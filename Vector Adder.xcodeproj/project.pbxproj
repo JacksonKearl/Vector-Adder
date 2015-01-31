@@ -91,8 +91,8 @@
 			children = (
 				7A9435CC1A7BD722004DEF83 /* AppDelegate.swift */,
 				7A9435D01A7BD722004DEF83 /* GameScene.swift */,
-				7A9435D21A7BD722004DEF83 /* GameViewController.swift */,
 				7AE5BD5F1A7BEB1E006ACC67 /* VAArrow.swift */,
+				7A9435D21A7BD722004DEF83 /* GameViewController.swift */,
 				7A9435D41A7BD722004DEF83 /* Main.storyboard */,
 				7A9435D71A7BD722004DEF83 /* Images.xcassets */,
 				7A9435D91A7BD722004DEF83 /* LaunchScreen.xib */,
