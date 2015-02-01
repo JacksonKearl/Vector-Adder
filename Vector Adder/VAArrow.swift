@@ -10,14 +10,13 @@ import UIKit
 import SpriteKit
 
 class VAArrow: SKSpriteNode {
-    var magnitude:CGFloat = 0
+    var value:CGVector = CGVectorMake(2, 0)
     
+    private var magnitude:CGFloat = 0
     private var magnitudeLabel = SKLabelNode(fontNamed: "Courier")
-    private var touchArea = SKShapeNode(circleOfRadius: 10)
+    private var touchArea = SKShapeNode(circleOfRadius: 15)
     private var previousScale:CGFloat = 1.0
     private var endPoint = CGPointMake(66, 0)
-    
-    private var length: Double = 33.0
     
     init(color: UIColor, magnitude mag: CGFloat, scale: CGFloat) {
         super.init(texture: SKTexture(imageNamed: "Arrow"), color: color, size: CGSizeMake(33,24))
@@ -30,7 +29,7 @@ class VAArrow: SKSpriteNode {
         touchArea.position = CGPointMake(33-10/(magnitude * scale), 0)
         touchArea.name = "Arrow Handle"
         touchArea.xScale = 1/(magnitude*scale);
-        touchArea.lineWidth = 0;
+        touchArea.lineWidth = 0
         
         magnitudeLabel.text = NSString(format: "%.2f", Double(magnitude))
         magnitudeLabel.position = CGPointMake((33-10)/2, 0)
@@ -55,7 +54,9 @@ class VAArrow: SKSpriteNode {
         angle = (e.x < 0) ? angle+3.141592 : angle
         self.zRotation = angle
         let distToEnd = sqrt(e.x*e.x + e.y*e.y)
-        magnitude = distToEnd/(scale*33)
+        magnitude = distToEnd/(scale*32)
+        
+        value = CGVectorMake(cos(angle)*magnitude, sin(angle)*magnitude)
         
         
         magnitudeLabel.text = NSString(format: "%.2f", Double(magnitude))
