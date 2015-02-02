@@ -11,12 +11,14 @@ import SpriteKit
 
 class VAArrow: SKSpriteNode {
     var value:CGVector = CGVectorMake(2, 0)
-    
     private var magnitude:CGFloat = 0
     private var magnitudeLabel = SKLabelNode(fontNamed: "Courier")
     private var touchArea = SKShapeNode(circleOfRadius: 15)
     private var previousScale:CGFloat = 1.0
     private var endPoint = CGPointMake(66, 0)
+    
+    var components = SKNode()
+    
     
     init(color: UIColor, magnitude mag: CGFloat, scale: CGFloat) {
         super.init(texture: SKTexture(imageNamed: "Arrow"), color: color, size: CGSizeMake(33,24))
@@ -42,6 +44,10 @@ class VAArrow: SKSpriteNode {
             
         self.xScale = magnitude*scale;
         previousScale = scale
+        
+        components.name = "Vector Components"
+        components.hidden = true
+        
     }
     
     func setEndPosition(e:CGPoint, scale:CGFloat){
@@ -62,8 +68,22 @@ class VAArrow: SKSpriteNode {
         magnitudeLabel.text = NSString(format: "%.2f", Double(magnitude))
         magnitudeLabel.zRotation = (e.x < 0) ? 3.141592 : 0
         
+        components.removeAllChildren()
+        if (abs(e.y) < abs(e.x)) {
+            let xComponent = SKShapeNode(rect: CGRectMake(0, 0, e.x, 0))
+            let yComponent = SKShapeNode(rect: CGRectMake(e.x, 0, 0, e.y))
+            components.addChild(xComponent)
+            components.addChild(yComponent)
+        } else {
+            let xComponent = SKShapeNode(rect: CGRectMake(0, e.y, e.x, 0))
+            let yComponent = SKShapeNode(rect: CGRectMake(0, 0, 0, e.y))
+            components.addChild(xComponent)
+            components.addChild(yComponent)
+        }
         
-
+        
+        
+        
     }
     
     func reScale(scale: CGFloat) {
@@ -79,7 +99,6 @@ class VAArrow: SKSpriteNode {
         touchArea.position = CGPointMake(33-10/length, 0)
 
     }
-    
     
 
     required init?(coder aDecoder: NSCoder) {

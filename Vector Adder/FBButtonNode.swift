@@ -31,7 +31,7 @@ class FBButtonNode: SKSpriteNode {
         let buttonBoundRect = CGSizeMake(max(buttonText!.frame.width+10, 30), max(buttonText!.fontSize, 30))
         buttonBackground = SKShapeNode(rectOfSize: buttonBoundRect)
         buttonBackground!.fillColor = UIColor.blueColor()
-        buttonBackground!.strokeColor = UIColor.lightGrayColor()
+        buttonBackground!.strokeColor = UIColor.whiteColor()
         buttonBackground!.lineWidth = (identifier==nil) ? 0 : 1
 
         let buttonResponder = SKSpriteNode(texture: nil, color: nil, size: buttonBackground!.frame.size)

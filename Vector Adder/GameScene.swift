@@ -29,6 +29,17 @@ class GameScene: SKScene {
             }
         }
     }
+    var componentsVisible: Bool = false {
+        didSet {
+            for child in mainNode!.children {
+                if child is VAArrow && (child !== netForceArrow) {
+                    (child as VAArrow).components.hidden = !componentsVisible
+                }
+            }
+            netForceArrow.components.hidden = !componentsVisible || netForceArrow.hidden
+        }
+    }
+    
     var mainNode:SKShapeNode?
     var netForceArrow = VAArrow(color: UIColor.redColor(), magnitude: 2, scale: 1)
     
@@ -41,6 +52,13 @@ class GameScene: SKScene {
         mainNode!.name = "Simulation Background"
         self.addChild(mainNode!)
         
+        let buttonBackdrop = SKShapeNode(rect: CGRectMake(0, 0, self.size.width, self.size.height-self.size.width))
+        buttonBackdrop.strokeColor = UIColor.clearColor()
+        buttonBackdrop.fillColor = UIColor.blackColor()
+        buttonBackdrop.zPosition = 1
+        addChild(buttonBackdrop)
+        
+        
         let initialArrow = VAArrow(color: UIColor.blackColor(), magnitude: 2, scale: scale)
         currentVectors.append(initialArrow)
         netForceArrow.hidden = true
@@ -50,7 +68,9 @@ class GameScene: SKScene {
         centerDot.strokeColor = UIColor.blackColor()
        
         mainNode!.addChild(netForceArrow)
+        mainNode!.addChild(netForceArrow.components)
         mainNode!.addChild(initialArrow)
+        mainNode!.addChild(initialArrow.components)
         mainNode!.addChild(centerDot)
         
         let zoomIn = SKShapeNode(circleOfRadius: 10)
@@ -63,8 +83,8 @@ class GameScene: SKScene {
         zoomIn.name = "Zoom In"
         
         let zoomOut = SKShapeNode(circleOfRadius: 10)
-        let minusLabel = SKLabelNode(text: "⎯") //This looks like a hyphen. It's not.
-        minusLabel.fontSize = 12
+        let minusLabel = SKLabelNode(text: "-")
+        minusLabel.fontSize = 68
         minusLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
         zoomOut.addChild(minusLabel)
         zoomOut.position = CGPointMake(-(self.size.width/2-15), -(self.size.width/2-15))
@@ -73,17 +93,21 @@ class GameScene: SKScene {
         minusLabel.name = "Zoom Out"
         
         
-        let addForceButton = FBButtonNode(text: "Add Force", identifier: "Add Force", size: 24)
-        addForceButton.position = CGPointMake(self.size.width/2, 70)
-        addChild(addForceButton)
+        let addForceButton = FBButtonNode(text: "Create Vector", identifier: "Add Force", size: 15)
+        addForceButton.position = CGPointMake(self.size.width/4, 105)
+        buttonBackdrop.addChild(addForceButton)
         
-        let remForceButton = FBButtonNode(text: "Remove Force", identifier: "Remove Force", size: 24)
-        remForceButton.position = CGPointMake(self.size.width/2, 140)
-        addChild(remForceButton)
+        let remForceButton = FBButtonNode(text: "Remove Vector", identifier: "Remove Force", size: 15)
+        remForceButton.position = CGPointMake(3*self.size.width/4, 105)
+        buttonBackdrop.addChild(remForceButton)
         
-        let showNetButton = FBBooleanButton(text: "Show Net Force", identifier: "Net Force", size: 24)
-        showNetButton.position = CGPointMake(self.size.width/2, 105)
-        addChild(showNetButton)
+        let showNetButton = FBBooleanButton(text: "Show Vector Sum", identifier: "Net Force", size: 15)
+        showNetButton.position = CGPointMake(self.size.width/2, 140)
+        buttonBackdrop.addChild(showNetButton)
+        
+        let showCompButton = FBBooleanButton(text: "Show Vector Components", identifier: "Show Components", size: 15)
+        showCompButton.position = CGPointMake(self.size.width/2, 70)
+        buttonBackdrop.addChild(showCompButton)
         
         
         
@@ -161,17 +185,32 @@ class GameScene: SKScene {
                 let newVector = VAArrow(color: UIColor.blackColor(), magnitude: 2, scale: scale)
                 currentVectors.append(newVector)
                 mainNode?.addChild(newVector)
+                mainNode!.addChild(newVector.components)
+                newVector.components.hidden = !componentsVisible
                 setUpNetForce()
                 
             case "Net Force" :
                 netForceArrow.hidden = !netForceArrow.hidden
+                
+                if !netForceArrow.hidden {
+                    netForceArrow.components.hidden = !componentsVisible
+                } else {
+                    netForceArrow.components.hidden = true
+                }
+                
                 setUpNetForce()
                 
             case "Remove Force" :
                 if (currentVectors.count != 0) {
+                    currentVectors.last?.components.removeFromParent()
                     currentVectors.removeLast().removeFromParent()
                 }
                 setUpNetForce()
+                
+            case "Show Components" :
+                componentsVisible = !componentsVisible
+
+                
             default:
                 break
             }
