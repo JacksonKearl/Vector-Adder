@@ -12,7 +12,7 @@ import SpriteKit
 class VAArrow: SKSpriteNode {
     var value:CGVector = CGVectorMake(2, 0)
     private var magnitude:CGFloat = 0
-    private var magnitudeLabel = SKLabelNode(fontNamed: "Courier")
+    private var magnitudeLabel = SKLabelNode(fontNamed: "GillSans-Bold")
     private var touchArea = SKShapeNode(circleOfRadius: 15)
     private var previousScale:CGFloat = 1.0
     private var endPoint = CGPointMake(66, 0)
@@ -80,6 +80,39 @@ class VAArrow: SKSpriteNode {
             components.addChild(xComponent)
             components.addChild(yComponent)
         }
+        
+        let xLabel = SKLabelNode(text:  NSString(format: "%.2f", Double(value.dx)))
+        xLabel.fontName = "GillSans-Bold"
+        xLabel.fontSize = 10
+        
+        let yLabel = SKLabelNode(text:  NSString(format: "%.2f", Double(value.dy)))
+        yLabel.fontName = "GillSans-Bold"
+        yLabel.fontSize = 10
+        
+        let quarterCW  = -CGFloat(M_PI_2)
+        let quarterCCW = +CGFloat(M_PI_2)
+        
+        switch abs(e.y) < abs(e.x) {
+            
+        case (false) : //y is greater magnitude than x, y negative
+            yLabel.zRotation = (e.x > 0) ? quarterCW : quarterCCW
+            yLabel.position = CGPointMake(0, e.y/2)
+            
+            xLabel.position = CGPointMake(e.x/2, e.y)
+
+        case (true) : //y is lessser magnitude than x, x negative
+            yLabel.zRotation = (e.x < 0) ? quarterCCW : quarterCW
+            yLabel.position = CGPointMake(e.x, e.y/2)
+            
+            xLabel.position = CGPointMake(e.x/2, (e.y) > 0 ? 0 : -10)
+            
+        default :
+            break
+
+        }
+        
+        components.addChild(xLabel)
+        components.addChild(yLabel)
         
         
         

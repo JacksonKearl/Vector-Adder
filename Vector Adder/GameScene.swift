@@ -92,21 +92,24 @@ class GameScene: SKScene {
         zoomOut.name = "Zoom Out"
         minusLabel.name = "Zoom Out"
         
+        let heightOfAd = UIDevice.currentDevice().userInterfaceIdiom == .Pad ? CGFloat(66.0) : CGFloat( 50.0)
+        let distBetweenSimAndAdd = self.size.height - self.size.width - heightOfAd
+        
         
         let addForceButton = FBButtonNode(text: "Create Vector", identifier: "Add Force", size: 15)
-        addForceButton.position = CGPointMake(self.size.width/4, 105)
+        addForceButton.position = CGPointMake(self.size.width/4, heightOfAd + distBetweenSimAndAdd/3 + 20)
         buttonBackdrop.addChild(addForceButton)
         
         let remForceButton = FBButtonNode(text: "Remove Vector", identifier: "Remove Force", size: 15)
-        remForceButton.position = CGPointMake(3*self.size.width/4, 105)
+        remForceButton.position = CGPointMake(3*self.size.width/4, heightOfAd + distBetweenSimAndAdd/3 + 20)
         buttonBackdrop.addChild(remForceButton)
         
         let showNetButton = FBBooleanButton(text: "Show Vector Sum", identifier: "Net Force", size: 15)
-        showNetButton.position = CGPointMake(self.size.width/2, 140)
+        showNetButton.position = CGPointMake(self.size.width/2, heightOfAd + (2 * distBetweenSimAndAdd)/3 + 20 )
         buttonBackdrop.addChild(showNetButton)
         
         let showCompButton = FBBooleanButton(text: "Show Vector Components", identifier: "Show Components", size: 15)
-        showCompButton.position = CGPointMake(self.size.width/2, 70)
+        showCompButton.position = CGPointMake(self.size.width/2, heightOfAd + 20)
         buttonBackdrop.addChild(showCompButton)
         
         
