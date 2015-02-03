@@ -93,7 +93,7 @@ class GameScene: SKScene {
         minusLabel.name = "Zoom Out"
         
         let heightOfAd = UIDevice.currentDevice().userInterfaceIdiom == .Pad ? CGFloat(66.0) : CGFloat( 50.0)
-        let distBetweenSimAndAdd = self.size.height - self.size.width - heightOfAd
+        let distBetweenSimAndAdd = self.size.height - self.size.width - heightOfAd  - 5
         
         
         let addForceButton = FBButtonNode(text: "Create Vector", identifier: "Add Force", size: 15)
