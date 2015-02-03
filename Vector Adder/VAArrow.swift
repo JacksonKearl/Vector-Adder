@@ -17,6 +17,10 @@ class VAArrow: SKSpriteNode {
     private var previousScale:CGFloat = 1.0
     private var endPoint = CGPointMake(66, 0)
     
+    private let randXComp = CGFloat(arc4random()%50 + 25)/100.0
+    private let randYComp = CGFloat(arc4random()%50 + 25)/100.0
+    
+    
     var components = SKNode()
     
     
@@ -69,104 +73,112 @@ class VAArrow: SKSpriteNode {
         magnitudeLabel.zRotation = (e.x < 0) ? 3.141592 : 0
         
         components.removeAllChildren()
-        if (abs(e.y) < abs(e.x)) {
-            let xComponent = SKShapeNode(rect: CGRectMake(0, 0, e.x, 0))
-            let yComponent = SKShapeNode(rect: CGRectMake(e.x, 0, 0, e.y))
-            components.addChild(xComponent)
-            components.addChild(yComponent)
-        } else {
-            let xComponent = SKShapeNode(rect: CGRectMake(0, e.y, e.x, 0))
-            let yComponent = SKShapeNode(rect: CGRectMake(0, 0, 0, e.y))
-            components.addChild(xComponent)
-            components.addChild(yComponent)
+        
+        if (!(abs(e.x) < 1 || abs(e.y) < 1)) {
+            if (abs(e.y) < abs(e.x)) {
+                let xComponent = SKShapeNode(rect: CGRectMake(0, 0, e.x, 0))
+                let yComponent = SKShapeNode(rect: CGRectMake(e.x, 0, 0, e.y))
+                components.addChild(xComponent)
+                components.addChild(yComponent)
+            } else {
+                let xComponent = SKShapeNode(rect: CGRectMake(0, e.y, e.x, 0))
+                let yComponent = SKShapeNode(rect: CGRectMake(0, 0, 0, e.y))
+                components.addChild(xComponent)
+                components.addChild(yComponent)
+            }
+            
+            let xLabel = SKLabelNode(text:  NSString(format: "%.2f", Double(value.dx)))
+            xLabel.fontName = "GillSans-Bold"
+            xLabel.fontSize = 10
+            
+            let yLabel = SKLabelNode(text:  NSString(format: "%.2f", Double(value.dy)))
+            yLabel.fontName = "GillSans-Bold"
+            yLabel.fontSize = 10
+            
+            let quarterCW  = -CGFloat(M_PI_2)
+            let quarterCCW = +CGFloat(M_PI_2)
+            
+            switch abs(e.y) < abs(e.x) {
+                
+            case (false) : //y is greater magnitude than x, y negative
+                yLabel.zRotation = (e.x > 0) ? quarterCW : quarterCCW
+                yLabel.position = CGPointMake(0, e.y * randYComp)
+                
+                xLabel.position = CGPointMake(e.x * randXComp, e.y)
+                
+            case (true) : //y is lessser magnitude than x, x negative
+                yLabel.zRotation = (e.x < 0) ? quarterCCW : quarterCW
+                yLabel.position = CGPointMake(e.x, e.y * randYComp)
+                
+                xLabel.position = CGPointMake(e.x * randXComp, (e.y) > 0 ? 0 : -10)
+                
+            default :
+                break
+                
+            }
+            
+            components.addChild(xLabel)
+            components.addChild(yLabel)
+            
+            let arcPath = CGPathCreateMutable()
+            var startAngle:CGFloat
+            var isCW: Bool
+            
+            let dAngle = Double(angle)<0 ? Double(angle)+2*M_PI : Double(angle)
+            if (dAngle < M_PI_4) {
+                startAngle = 0
+                isCW = false
+            } else if (dAngle < 2*M_PI_4) {
+                startAngle = CGFloat(M_PI_2)
+                isCW = true
+            } else if dAngle < 3*M_PI_4 {
+                startAngle = CGFloat(M_PI_2)
+                isCW = false
+                
+            } else if dAngle < 4*M_PI_4 {
+                startAngle = CGFloat(M_PI)
+                isCW = true
+                
+            } else if dAngle < 5*M_PI_4 {
+                startAngle = CGFloat(M_PI)
+                isCW = false
+                
+            } else if dAngle < 6*M_PI_4 {
+                startAngle = CGFloat(3*M_PI_2)
+                isCW = true
+                
+            } else if dAngle < 7*M_PI_4 {
+                startAngle = CGFloat(3*M_PI_2)
+                isCW = false
+                
+            } else {
+                startAngle = 0
+                isCW = true
+                
+            }
+            
+            var labelOfAngle = abs(Double(startAngle) - Double(dAngle)) * 180/M_PI
+            labelOfAngle = (labelOfAngle < 46) ? labelOfAngle : 360 - labelOfAngle
+            assert(labelOfAngle <= 45, "Angle out of RANGE!?!?!!?!")
+            
+            var angleOfAngleLabel = Double(startAngle) + ((isCW) ? -labelOfAngle * M_PI/360 : +labelOfAngle * M_PI/360)
+            
+            let xComp = CGFloat(cos(angleOfAngleLabel))
+            let yComp = CGFloat(sin(angleOfAngleLabel))
+            
+            let angleLabel = SKLabelNode(fontNamed: "GillSans-Bold")
+            angleLabel.text = NSString(format: "%.0fº", labelOfAngle)
+            angleLabel.fontSize = 10
+            angleLabel.position = CGPointMake(distToEnd/2.7 * xComp, distToEnd/2.7 * yComp)
+            
+            CGPathAddArc(arcPath, nil, 0, 0, distToEnd/3, startAngle, angle, isCW)
+            
+            let arc = SKShapeNode(path: arcPath)
+            arc.addChild(angleLabel)
+            
+            components.addChild(arc)
+            
         }
-        
-        let xLabel = SKLabelNode(text:  NSString(format: "%.2f", Double(value.dx)))
-        xLabel.fontName = "GillSans-Bold"
-        xLabel.fontSize = 10
-        
-        let yLabel = SKLabelNode(text:  NSString(format: "%.2f", Double(value.dy)))
-        yLabel.fontName = "GillSans-Bold"
-        yLabel.fontSize = 10
-        
-        let quarterCW  = -CGFloat(M_PI_2)
-        let quarterCCW = +CGFloat(M_PI_2)
-        
-        switch abs(e.y) < abs(e.x) {
-            
-        case (false) : //y is greater magnitude than x, y negative
-            yLabel.zRotation = (e.x > 0) ? quarterCW : quarterCCW
-            yLabel.position = CGPointMake(0, e.y/2)
-            
-            xLabel.position = CGPointMake(e.x/2, e.y)
-            
-        case (true) : //y is lessser magnitude than x, x negative
-            yLabel.zRotation = (e.x < 0) ? quarterCCW : quarterCW
-            yLabel.position = CGPointMake(e.x, e.y/2)
-            
-            xLabel.position = CGPointMake(e.x/2, (e.y) > 0 ? 0 : -10)
-            
-        default :
-            break
-            
-        }
-        
-        components.addChild(xLabel)
-        components.addChild(yLabel)
-        
-        let arcPath = CGPathCreateMutable()
-        var startAngle:CGFloat
-        var isCW: Bool
-        
-        let dAngle = Double(angle)<0 ? Double(angle)+2*M_PI : Double(angle)
-        if (dAngle < M_PI_4) {
-            startAngle = 0
-            isCW = false
-            println(0)
-        } else if (dAngle < 2*M_PI_4) {
-            startAngle = CGFloat(M_PI_2)
-            isCW = true
-            println(1)
-        } else if dAngle < 3*M_PI_4 {
-            startAngle = CGFloat(M_PI_2)
-            isCW = false
-            println(2)
-
-        } else if dAngle < 4*M_PI_4 {
-            startAngle = CGFloat(M_PI)
-            isCW = true
-            println(3)
-
-        } else if dAngle < 5*M_PI_4 {
-            startAngle = CGFloat(M_PI)
-            isCW = false
-            println(4)
-
-        } else if dAngle < 6*M_PI_4 {
-            startAngle = CGFloat(3*M_PI_2)
-            isCW = true
-            println(5)
-
-        } else if dAngle < 7*M_PI_4 {
-            startAngle = CGFloat(3*M_PI_2)
-            isCW = false
-            println(6)
-
-        } else {
-            startAngle = 0
-            isCW = true
-            println(7)
-
-        }
-        
-        CGPathAddArc(arcPath, nil, 0, 0, distToEnd/3, startAngle, angle, isCW)
-        
-        let arc = SKShapeNode(path: arcPath)
-    
-        
-        components.addChild(arc)
-        
-        
         
     }
     
