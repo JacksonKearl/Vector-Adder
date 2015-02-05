@@ -169,6 +169,7 @@ class VAArrow: SKSpriteNode {
             let angleLabel = SKLabelNode(fontNamed: "GillSans-Bold")
             angleLabel.text = NSString(format: "%.0fº", labelOfAngle)
             angleLabel.fontSize = 10
+            angleLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
             angleLabel.position = CGPointMake(distToEnd/2.7 * xComp, distToEnd/2.7 * yComp)
             
             CGPathAddArc(arcPath, nil, 0, 0, distToEnd/3, startAngle, angle, isCW)

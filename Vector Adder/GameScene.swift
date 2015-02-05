@@ -78,19 +78,23 @@ class GameScene: SKScene {
         plusLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
         plusLabel.name = "Zoom In"
         zoomIn.addChild(plusLabel)
-        zoomIn.position = CGPointMake(self.size.width/2-15, -(self.size.width/2-15))
+        zoomIn.position = CGPointMake(self.size.width/2-20, -(self.size.width/2-20))
         mainNode!.addChild(zoomIn)
         zoomIn.name = "Zoom In"
+        zoomIn.yScale = CGFloat(1.5)
+        zoomIn.xScale = zoomIn.yScale
         
         let zoomOut = SKShapeNode(circleOfRadius: 10)
         let minusLabel = SKLabelNode(text: "-")
         minusLabel.fontSize = 68
         minusLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
         zoomOut.addChild(minusLabel)
-        zoomOut.position = CGPointMake(-(self.size.width/2-15), -(self.size.width/2-15))
+        zoomOut.position = CGPointMake(-(self.size.width/2-20), -(self.size.width/2-20))
         mainNode!.addChild(zoomOut)
         zoomOut.name = "Zoom Out"
         minusLabel.name = "Zoom Out"
+        zoomOut.yScale = CGFloat(1.5)
+        zoomOut.xScale = zoomOut.yScale
         
         let heightOfAd = UIDevice.currentDevice().userInterfaceIdiom == .Pad ? CGFloat(66.0) : CGFloat( 50.0)
         let distBetweenSimAndAdd = self.size.height - self.size.width - heightOfAd  - 5
